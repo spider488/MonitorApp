@@ -29,8 +29,13 @@ class Details extends React.Component {
                 />
                 <ScrollView contentContainerStyle={styles.scrollView}>
                     {Object.values(projects)
+                        .reverse()
                         .map(project => (
-                            <Project key={project.id} name="hello"/>
+                            <Project 
+                                key={project.id}
+                                deleteProject={this._deleteProject}
+                                {...project}
+                            />
                         ))
                     }
                 </ScrollView>
@@ -48,8 +53,6 @@ class Details extends React.Component {
             const projects = await AsyncStorage.getItem("@projects");
             const parsedProjects = JSON.parse(projects);
             this.setState({loadedProjects: true, projects: parsedProjects || {} });
-            console.log("_loadProject");
-            console.log("load new Project:" + projects.text);
         } catch(err) {
             console.log(err)
         }
@@ -57,8 +60,6 @@ class Details extends React.Component {
     _addProjects = () => {
         const { newProject } = this.state;
         if (newProject !== "") {
-            console.log("newProject: " + newProject)
-            console.log('_addProject')
             this.setState(prevState => {
             const ID = uuidv1();
             const newProjectObject = {
@@ -81,6 +82,18 @@ class Details extends React.Component {
             });
         }
     }
+    _deleteProject = id => {
+        this.setState(prevState => {
+          const projects = prevState.projects;
+          delete projects[id];
+          const newState = {
+            ...prevState,
+            ...projects
+        };
+          this._saveProjects(newState.projects);
+          return { ...newState };
+        });
+    };
     _saveProjects = newProejcts => {
         const saveProjects = AsyncStorage.setItem("@projects", JSON.stringify(newProejcts));
     }

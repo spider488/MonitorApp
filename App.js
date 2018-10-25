@@ -6,14 +6,6 @@ import Details from './component/Details';
 const { height, width } = Dimensions.get('window');
 
 export default class App extends React.Component {
-  // state = {
-  //   newProject: "",
-  //   loadedProjects: false,
-  //   projects: {}
-  // }
-  // componentDidMount = () => {
-  //   this._loadProjects();
-  // }
   render() {
     return (
       <View style={styles.container}>
