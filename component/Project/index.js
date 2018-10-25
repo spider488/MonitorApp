@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View , TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import PropTypes from 'prop-types';
+import SwipeOut from 'react-native-swipeout'
 
 class Project extends React.Component {
   constructor(props) {
@@ -11,24 +12,33 @@ class Project extends React.Component {
     id: PropTypes.string.isRequired,
     deleteProject: PropTypes.func.isRequired,
   }
+  
   render() {
     const { id, name, deleteProject, text} = this.props
+    var swipeoutBtn = [
+        {
+            text: 'Delete',
+            backgroundColor: "red",
+            onPress: () => {
+              deleteProject(id)
+            }
+        }
+    ]
     return (
-      <View style={styles.container}>
+      <SwipeOut right={swipeoutBtn} style={styles.swipeOut}>
+        <View style={styles.container}>
           <FontAwesome name="circle" size={50} color="orange" />
           <Text style={styles.text}>{text}</Text>
           <TouchableOpacity 
             style={styles.viewBtnWrapper} 
-            onPressOut={event => {
-              event.stopPropagation;
-              deleteProject(id)
-            }}
-            >
+            
+          >
             <View style={styles.viewBtn}>
               <Text style={styles.viewBtnText}>View</Text>
             </View>
           </TouchableOpacity>
-      </View>
+        </View>
+      </SwipeOut>
     )
   }
 }
@@ -62,6 +72,9 @@ const styles = StyleSheet.create({
   viewBtnText: {
     color: "white",
     fontSize: 16,
+  },
+  swipeOut: {
+    backgroundColor: "white",
   }
 });
 

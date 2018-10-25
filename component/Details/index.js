@@ -124,14 +124,14 @@ const styles = StyleSheet.create({
         })
     },
     input: {
-    padding: 20,
-    borderBottomColor: "#bbb",
-    borderBottomWidth: 1,
-    fontSize: 25
+        padding: 20,
+        borderBottomColor: "#bbb",
+        borderBottomWidth: 1,
+        fontSize: 25
     },
     scrollView: {
-    width: width - 40
-    },  
+        width: width - 40
+    },
 });
 
 export default Details;
